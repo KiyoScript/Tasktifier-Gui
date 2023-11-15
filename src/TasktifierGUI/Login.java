@@ -108,6 +108,7 @@ public class Login extends javax.swing.JFrame {
         LoginMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         FrameContainer.setBackground(new java.awt.Color(39, 43, 48));
 
