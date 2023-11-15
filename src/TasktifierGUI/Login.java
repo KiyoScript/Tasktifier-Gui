@@ -402,7 +402,7 @@ public class Login extends javax.swing.JFrame {
                 } else {
                     if(text.indexOf('@') < text.indexOf('.') &&
                        text.indexOf('@') + 1 < text.indexOf('.') &&
-                       text.matches(".*[a-zA-Z0-9]@.*[a-zA-Z0-9]\\..*")){
+                       text.matches(".*[a-zA-Z0-9]@.*[a-zA-Z0-9]\\..*[a-zA-Z0-9]")){
                         textField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GREEN));
                         EmailIconInvalid.setVisible(false);
                         EmailWarning.setText("");
@@ -472,6 +472,13 @@ public class Login extends javax.swing.JFrame {
 
         EmailTextField.setText(savedEmail);
         PasswordField.setText(savedPassword);
+        
+        if (!savedEmail.isEmpty() && !savedPassword.isEmpty()) {
+            EmailTextField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GREEN));
+            PasswordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GREEN));
+            isValidEmail = true;
+            isValidPassword = true;
+        }
     }
 
     private void savePreferences(String email, String password) {
