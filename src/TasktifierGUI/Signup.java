@@ -15,6 +15,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.sql.*;
+import java.util.HashMap;
 
 public class Signup extends javax.swing.JFrame {
     private final ImageIcon invalid = new ImageIcon("assets/images/invalid.png");
@@ -497,7 +498,11 @@ public class Signup extends javax.swing.JFrame {
                     EmailWarning.setForeground(new java.awt.Color(255, 255, 0));
                     EmailIconInvalid.setVisible(true);
                 } else {
-                    SQLMethods.insertIntoDatabase(EmailTextField.getText(), new String(PasswordField.getPassword()));
+                    HashMap<String, String> userData = new HashMap<>();
+                    userData.put("email", email);
+                    userData.put("password", password);
+                
+                    SQLMethods.create(userData);
                     System.out.println("New user inserted successfully!");
                     SuccessfulSignup.setVisible(true);
                     redirectTimer.start();

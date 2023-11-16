@@ -4,6 +4,7 @@
  */
 package TasktifierGUI;
 
+import static TasktifierGUI.SQLMethods.isValidLogin;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
 import java.awt.event.*;
@@ -415,25 +416,6 @@ public class Login extends javax.swing.JFrame {
     
     private void setDefaultBorderToPasswordField(JPasswordField passwordField) {
         passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
-    }
-    
-    private boolean isValidLogin(String email, String password) {
-        try {
-            Connection connection = SQLMethods.getConnection();
-            String sql = "SELECT COUNT(*) FROM users WHERE email = ? AND password = ?";
-        
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, email);
-                preparedStatement.setString(2, password);
-            
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    resultSet.next();
-                    return resultSet.getInt(1) > 0;
-                }
-            }
-        } catch (SQLException ex) {
-            return false;
-        }
     }
     
     private void handleLogin() {
