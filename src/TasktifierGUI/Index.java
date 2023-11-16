@@ -4,9 +4,8 @@
  */
 package TasktifierGUI;
 
-import static TasktifierGUI.Login.getConnection;
 import com.formdev.flatlaf.FlatDarkLaf;
-import java.sql.*;
+import java.sql.SQLException;
 import javax.swing.*;
 /**
  *
@@ -17,15 +16,8 @@ public class Index {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        try (Connection connection = getConnection()) {
-            if (connection != null) {
-                System.out.println("Connected to the database!");
-            }
-        } catch (SQLException e) {
-            System.out.println("Not connected to the database! Make sure that MySQL server is open and `tasktifier_db` database exists.");
-            System.exit(0);
-        }
+    public static void main(String[] args) throws SQLException {
+        SQLMethods.testConnection();
         
         try{
             UIManager.setLookAndFeel(new FlatDarkLaf());
@@ -36,5 +28,4 @@ public class Index {
             loginFrame.setVisible(true);
         });
     }
-    
 }
