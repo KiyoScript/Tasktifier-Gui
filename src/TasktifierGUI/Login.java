@@ -4,7 +4,6 @@
  */
 package TasktifierGUI;
 
-import static TasktifierGUI.SQLMethods.isValidLogin;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
 import java.awt.event.*;
@@ -419,12 +418,13 @@ public class Login extends javax.swing.JFrame {
     }
     
     private void handleLogin() {
+        user.Authenticator authenticator = new user.Authenticator();
         String email = EmailTextField.getText();
         char[] passwordChars = PasswordField.getPassword();
         String password = new String(passwordChars);
 
         if(isValidEmail && isValidPassword){
-            if (isValidLogin(email, password)) {
+            if (authenticator.isValidLogin(email, password)) {
                 if (RememberMeCheckbox.isSelected()) {
                     savePreferences(email, password);
                 }

@@ -17,7 +17,7 @@ public class SQLMethods {
     private static final String PASSWORD = "";
     private static Connection connection;
     
-    private SQLMethods(){}
+    public SQLMethods(){}
     
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
@@ -83,14 +83,6 @@ public class SQLMethods {
 
         return resultData.isEmpty() ? null : resultData;
     }
-    
-    public static boolean isValidLogin(String email, String password) {
-        HashMap<String, String> resultData = SQLMethods.find(email);
-
-        return !resultData.isEmpty() && password.equals(resultData.get("password"));
-    }
-
-    
     // Methods below will be implemented soon while implementing tasks GUI
     /*
         public static HashMap<String, String> find(HashMap<String, String> userData)
