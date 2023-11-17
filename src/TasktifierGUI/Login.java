@@ -17,18 +17,11 @@ import java.util.prefs.Preferences;
  * @author Daniel
  */
 public class Login extends javax.swing.JFrame {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/tasktifier_db";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
     private static boolean isValidEmail = false;
     private static boolean isValidPassword = false;
     private Preferences preferences;
     private static final String PREF_EMAIL = "email";
     private static final String PREF_PASSWORD = "password";
-    
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
-    }
     
     /**
      * Creates new form Login
@@ -37,9 +30,6 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         
         this.setLocationRelativeTo(null);
-        
-        System.out.println(PREF_EMAIL);
-        System.out.println(PREF_PASSWORD);
         
         setDefaultBorderToTextField(EmailTextField);
 	setDefaultBorderToPasswordField(PasswordField);
@@ -427,32 +417,14 @@ public class Login extends javax.swing.JFrame {
         passwordField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
     }
     
-    private boolean isValidLogin(String email, String password) {
-        try {
-            Connection connection = getConnection();
-            String sql = "SELECT COUNT(*) FROM users WHERE email = ? AND password = ?";
-        
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, email);
-                preparedStatement.setString(2, password);
-            
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    resultSet.next();
-                    return resultSet.getInt(1) > 0;
-                }
-            }
-        } catch (SQLException ex) {
-            return false;
-        }
-    }
-    
     private void handleLogin() {
+        user.Authenticator authenticator = new user.Authenticator();
         String email = EmailTextField.getText();
         char[] passwordChars = PasswordField.getPassword();
         String password = new String(passwordChars);
 
         if(isValidEmail && isValidPassword){
-            if (isValidLogin(email, password)) {
+            if (authenticator.isValidLogin(email, password)) {
                 if (RememberMeCheckbox.isSelected()) {
                     savePreferences(email, password);
                 }
@@ -501,7 +473,7 @@ public class Login extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        try (Connection connection = getConnection()) {
+        try (Connection connection = SQLMethods.getConnection()) {
             if (connection != null) {
                 System.out.println("Connected to the database!");
             }

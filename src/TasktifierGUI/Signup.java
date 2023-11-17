@@ -15,21 +15,16 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.sql.*;
+import java.util.HashMap;
 
 public class Signup extends javax.swing.JFrame {
     private final ImageIcon invalid = new ImageIcon("assets/images/invalid.png");
     private static boolean isValidPassword = false;
     private static boolean isValidConfirmPassword = false;
     private static boolean isValidEmail = false;
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/tasktifier_db";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
     private Timer redirectTimer;
     private static final int REDIRECT_DELAY = 3000;
     
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
-    }
     /**
      * Creates new form Signup
      */
@@ -474,7 +469,7 @@ public class Signup extends javax.swing.JFrame {
     
     private boolean isEmailAlreadyExists(String email) {
         try {
-            Connection connection = getConnection();
+            Connection connection = SQLMethods.getConnection();
             String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, email);
@@ -503,25 +498,17 @@ public class Signup extends javax.swing.JFrame {
                     EmailWarning.setForeground(new java.awt.Color(255, 255, 0));
                     EmailIconInvalid.setVisible(true);
                 } else {
-                    insertIntoDatabase(EmailTextField.getText(), new String(PasswordField.getPassword()));
+                    HashMap<String, String> userData = new HashMap<>();
+                    userData.put("email", email);
+                    userData.put("password", password);
+                
+                    SQLMethods.create(userData);
                     System.out.println("New user inserted successfully!");
                     SuccessfulSignup.setVisible(true);
                     redirectTimer.start();
                 }
             }
         });
-    }
-    
-    private void insertIntoDatabase(String email, String password) {
-        try {
-            Connection connection = getConnection();
-            String sql = "INSERT INTO users (email, password) VALUES (?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, email);
-                preparedStatement.setString(2, password);
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException ex) {}
     }
     
     private void loginLinkMouseClicked() {
