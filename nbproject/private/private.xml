@@ -3,10 +3,28 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/Circles.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/popupFrame/AddTask.java</file>
             <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/TasktifierGUI/Signup.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/TableDark.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/MainFrameRefresher.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/StatusType.java</file>
             <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/TasktifierGUI/Index.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/ModernScrollBarUI.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/user/SQLMethods.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/TableActionCellRender.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/TableActionEvent.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/TableActionCellEditor.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/TableDarkStatus.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/popupFrame/ReminderFrame.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/LiveLocalDateAndTime.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/popupFrame/StartTimeReminderFrame.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/PanelAction.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/ActionButton.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/user/Authenticator.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/customComponents/ScrollBarCustom.java</file>
             <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/TasktifierGUI/Login.java</file>
-            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/TasktifierGUI/SQLMethods.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/Tasktifier-Gui/src/TasktifierGUI/Main.java</file>
         </group>
     </open-files>
 </project-private>

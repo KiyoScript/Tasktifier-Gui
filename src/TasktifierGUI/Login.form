@@ -54,7 +54,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="153" max="-2" attributes="0"/>
-                          <Component id="LoginMessage" min="-2" pref="230" max="-2" attributes="0"/>
+                          <Component id="LoginMessage" min="-2" pref="275" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="101" max="32767" attributes="0"/>
@@ -124,21 +124,13 @@
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="LogoTextContainer" alignment="0" min="-2" pref="256" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="LogoTextContainer" alignment="0" min="-2" pref="256" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="Logo" min="-2" pref="75" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="LogoTitle" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
-                              <Component id="ChangePasswordHyperlink" min="-2" max="-2" attributes="0"/>
+                              <Component id="Logo" min="-2" pref="75" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="LogoTitle" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -195,10 +187,8 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="Separator" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="ChangePasswordHyperlink" min="-2" pref="16" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="SignupLink" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="151" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -337,20 +327,12 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Log in"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JSeparator" name="Separator">
-            </Component>
-            <Component class="javax.swing.JLabel" name="ChangePasswordHyperlink">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="30" green="2b" red="26" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="a0" green="a0" red="a0" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Forgot Password?"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="SignupLink">
               <Properties>
