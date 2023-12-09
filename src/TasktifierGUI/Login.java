@@ -4,10 +4,18 @@
  */
 package TasktifierGUI;
 
+<<<<<<< HEAD
+=======
+import com.formdev.flatlaf.FlatDarkLaf;
+>>>>>>> main
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
+<<<<<<< HEAD
+=======
+import java.sql.*;
+>>>>>>> main
 import java.util.prefs.Preferences;
 
 /**
@@ -20,14 +28,21 @@ public class Login extends javax.swing.JFrame {
     private Preferences preferences;
     private static final String PREF_EMAIL = "email";
     private static final String PREF_PASSWORD = "password";
+<<<<<<< HEAD
     private Timer redirectTimer;
     private static final int REDIRECT_DELAY = 3000;
     private static Login instance;
+=======
+>>>>>>> main
     
     /**
      * Creates new form Login
      */
+<<<<<<< HEAD
     private Login() {
+=======
+    public Login() {
+>>>>>>> main
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -48,7 +63,10 @@ public class Login extends javax.swing.JFrame {
         });
         
         LoginButton.addActionListener((ActionEvent e) -> {
+<<<<<<< HEAD
             initializeTimer();
+=======
+>>>>>>> main
             handleLogin();
         });
         
@@ -89,6 +107,10 @@ public class Login extends javax.swing.JFrame {
         PasswordField = new javax.swing.JPasswordField();
         LoginButton = new javax.swing.JButton();
         Separator = new javax.swing.JSeparator();
+<<<<<<< HEAD
+=======
+        ChangePasswordHyperlink = new javax.swing.JLabel();
+>>>>>>> main
         SignupLink = new javax.swing.JLabel();
         RememberMeCheckbox = new javax.swing.JCheckBox();
         EmailIconInvalid = new javax.swing.JLabel();
@@ -160,7 +182,14 @@ public class Login extends javax.swing.JFrame {
 
         LoginButton.setForeground(new java.awt.Color(255, 255, 255));
         LoginButton.setText("Log in");
+<<<<<<< HEAD
         LoginButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+=======
+
+        ChangePasswordHyperlink.setBackground(new java.awt.Color(38, 43, 48));
+        ChangePasswordHyperlink.setForeground(new java.awt.Color(160, 160, 160));
+        ChangePasswordHyperlink.setText("Forgot Password?");
+>>>>>>> main
 
         SignupLink.setBackground(new java.awt.Color(38, 43, 48));
         SignupLink.setForeground(new java.awt.Color(160, 160, 160));
@@ -213,6 +242,7 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(PasswordField))
                         .addContainerGap(54, Short.MAX_VALUE))))
             .addGroup(LoginLayout.createSequentialGroup()
+<<<<<<< HEAD
                 .addGap(85, 85, 85)
                 .addGroup(LoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LogoTextContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,6 +250,20 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(Logo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(LogoTitle)))
+=======
+                .addGroup(LoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(LoginLayout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addGroup(LoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LogoTextContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(LoginLayout.createSequentialGroup()
+                                .addComponent(Logo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(LogoTitle))))
+                    .addGroup(LoginLayout.createSequentialGroup()
+                        .addGap(168, 168, 168)
+                        .addComponent(ChangePasswordHyperlink)))
+>>>>>>> main
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(LoginLayout.createSequentialGroup()
                 .addGap(62, 62, 62)
@@ -265,8 +309,15 @@ public class Login extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(Separator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+<<<<<<< HEAD
                 .addComponent(SignupLink)
                 .addGap(151, 151, 151))
+=======
+                .addComponent(ChangePasswordHyperlink, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SignupLink)
+                .addGap(129, 129, 129))
+>>>>>>> main
         );
 
         SignupLink.addMouseListener(new MouseAdapter() {
@@ -300,7 +351,11 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(LoginCover, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(FrameContainerLayout.createSequentialGroup()
                         .addGap(153, 153, 153)
+<<<<<<< HEAD
                         .addComponent(LoginMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+=======
+                        .addComponent(LoginMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+>>>>>>> main
                 .addContainerGap(101, Short.MAX_VALUE))
         );
         FrameContainerLayout.setVerticalGroup(
@@ -333,6 +388,7 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+<<<<<<< HEAD
     public static Login getInstance() {
         if (instance == null) {
             instance = new Login();
@@ -340,6 +396,8 @@ public class Login extends javax.swing.JFrame {
         return instance;
     }
     
+=======
+>>>>>>> main
     private void addFocusListenerToPasswordField(JPasswordField passwordField) {
         passwordField.addFocusListener(new FocusListener() {
             @Override
@@ -426,6 +484,7 @@ public class Login extends javax.swing.JFrame {
                 if (RememberMeCheckbox.isSelected()) {
                     savePreferences(email, password);
                 }
+<<<<<<< HEAD
                 int userID = authenticator.getLoggedInUserID(email);
                 authenticator.updateLoginStatus(userID, true);
                 LoginMessage.setText("Login successful. Welcome to Tasktifier!");
@@ -437,11 +496,20 @@ public class Login extends javax.swing.JFrame {
                 LoginMessage.setText("User doesn't exist or wrong password!");
                 LoginMessage.setForeground(new Color(255, 65, 95));
                 LoginMessage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TasktifierGUI/assets/images/invalid-25.png")));
+=======
+                setVisible(false);
+                dispose();
+        
+                Welcome welcome = new Welcome();
+                SwingUtilities.invokeLater(() -> welcome.setVisible(true));
+            } else {
+>>>>>>> main
                 LoginMessage.setVisible(true);
             }
         }
     }
     
+<<<<<<< HEAD
     private void initializeTimer() {
         redirectTimer = new Timer(REDIRECT_DELAY, (ActionEvent e) -> {
             setVisible(false);
@@ -457,6 +525,8 @@ public class Login extends javax.swing.JFrame {
         });
     }
     
+=======
+>>>>>>> main
     private void loadPreferences() {
         String savedEmail = preferences.get(PREF_EMAIL, "");
         String savedPassword = preferences.get(PREF_PASSWORD, "");
@@ -481,16 +551,49 @@ public class Login extends javax.swing.JFrame {
         setVisible(false);
         dispose();
 
+<<<<<<< HEAD
         Signup signupFrame = Signup.getInstance();
         SwingUtilities.invokeLater(() -> {
             signupFrame.setVisible(true);
+=======
+        Signup signup = new Signup();
+        SwingUtilities.invokeLater(() -> {
+            signup.setVisible(true);
+>>>>>>> main
         });
     }
     
     /**
      * @param args the command line arguments
      */
+<<<<<<< HEAD
     // Variables declaration - do not modify//GEN-BEGIN:variables
+=======
+    public static void main(String args[]) {
+        try (Connection connection = SQLMethods.getConnection()) {
+            if (connection != null) {
+                System.out.println("Connected to the database!");
+            }
+        } catch (SQLException e) {
+            System.out.println("Not connected to the database! Make sure that MySQL server is open and `tasktifier_db` database exists.");
+            System.exit(0);
+        }
+        
+        try{
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (UnsupportedLookAndFeelException e){}
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Login().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ChangePasswordHyperlink;
+>>>>>>> main
     private javax.swing.JLabel EmailIconInvalid;
     private javax.swing.JLabel EmailLabel;
     private javax.swing.JTextField EmailTextField;

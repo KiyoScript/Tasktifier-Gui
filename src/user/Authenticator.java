@@ -4,10 +4,13 @@
  */
 package user;
 
+<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+=======
+>>>>>>> main
 import java.util.HashMap;
 
 /**
@@ -16,6 +19,7 @@ import java.util.HashMap;
  */
 public class Authenticator {
     public boolean isValidLogin(String email, String password) {
+<<<<<<< HEAD
         user.SQLMethods authentication = new user.SQLMethods();
         HashMap<String, String> resultData = authentication.findUser(email);
 
@@ -93,4 +97,11 @@ public class Authenticator {
         } catch (SQLException e) {}
         return -1;
     }
+=======
+        TasktifierGUI.SQLMethods authentication = new TasktifierGUI.SQLMethods();
+        HashMap<String, String> resultData = authentication.find(email);
+
+        return !resultData.isEmpty() && password.equals(resultData.get("password"));
+    }
+>>>>>>> main
 }
