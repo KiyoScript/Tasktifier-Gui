@@ -9,10 +9,6 @@ package TasktifierGUI;
  * @author Daniel
  */
 
-<<<<<<< HEAD
-=======
-import com.formdev.flatlaf.FlatDarkLaf;
->>>>>>> main
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -27,19 +23,12 @@ public class Signup extends javax.swing.JFrame {
     private static boolean isValidEmail = false;
     private Timer redirectTimer;
     private static final int REDIRECT_DELAY = 3000;
-<<<<<<< HEAD
     private static Signup instance;
-=======
->>>>>>> main
     
     /**
      * Creates new form Signup
      */
-<<<<<<< HEAD
     private Signup() {
-=======
-    public Signup() {
->>>>>>> main
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -64,7 +53,6 @@ public class Signup extends javax.swing.JFrame {
         setupListeners();
         initializeTimer();
     }
-<<<<<<< HEAD
     
     public static Signup getInstance() {
         if (instance == null) {
@@ -72,8 +60,6 @@ public class Signup extends javax.swing.JFrame {
         }
         return instance;
     }
-=======
->>>>>>> main
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -100,10 +86,6 @@ public class Signup extends javax.swing.JFrame {
         ConfirmPasswordField = new javax.swing.JPasswordField();
         SignupButton = new javax.swing.JButton();
         Separator = new javax.swing.JSeparator();
-<<<<<<< HEAD
-=======
-        ChangePasswordHyperlink = new javax.swing.JLabel();
->>>>>>> main
         LoginLink = new javax.swing.JLabel();
         Nothing = new javax.swing.JTextField();
         ConfirmPasswordIconInvalid = new javax.swing.JLabel();
@@ -190,14 +172,7 @@ public class Signup extends javax.swing.JFrame {
 
         SignupButton.setForeground(new java.awt.Color(255, 255, 255));
         SignupButton.setText("Sign Up");
-<<<<<<< HEAD
         SignupButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-=======
-
-        ChangePasswordHyperlink.setBackground(new java.awt.Color(38, 43, 48));
-        ChangePasswordHyperlink.setForeground(new java.awt.Color(160, 160, 160));
-        ChangePasswordHyperlink.setText("Forgot Password?");
->>>>>>> main
 
         LoginLink.setBackground(new java.awt.Color(38, 43, 48));
         LoginLink.setForeground(new java.awt.Color(160, 160, 160));
@@ -237,65 +212,31 @@ public class Signup extends javax.swing.JFrame {
                             .addComponent(Separator, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(SignupButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(54, 54, 54))
-<<<<<<< HEAD
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignupFormLayout.createSequentialGroup()
                         .addComponent(EmailIconInvalid, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(EmailWarning))
-=======
->>>>>>> main
                     .addGroup(SignupFormLayout.createSequentialGroup()
                         .addGroup(SignupFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ConfirmPasswordLabel)
                             .addComponent(PasswordLabel)
-<<<<<<< HEAD
                             .addComponent(ConfirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(EmailLabel)
                             .addGroup(SignupFormLayout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addComponent(Nothing, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(EmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-=======
-                            .addComponent(ConfirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(SignupFormLayout.createSequentialGroup()
-                        .addGroup(SignupFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(EmailLabel)
-                            .addGroup(SignupFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(SignupFormLayout.createSequentialGroup()
-                                    .addGap(21, 21, 21)
-                                    .addComponent(Nothing, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE))
-                                .addGroup(SignupFormLayout.createSequentialGroup()
-                                    .addComponent(EmailIconInvalid, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(EmailWarning))
-                                .addComponent(EmailTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
->>>>>>> main
                             .addGroup(SignupFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(SignupFormLayout.createSequentialGroup()
                                     .addComponent(ConfirmPasswordIconInvalid, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(ConfirmPasswordWarning))
                                 .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
-<<<<<<< HEAD
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignupFormLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LoginLink)
                 .addGap(129, 129, 129))
-=======
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignupFormLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(SignupFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignupFormLayout.createSequentialGroup()
-                        .addComponent(ChangePasswordHyperlink)
-                        .addGap(151, 151, 151))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignupFormLayout.createSequentialGroup()
-                        .addComponent(LoginLink)
-                        .addGap(130, 130, 130))))
->>>>>>> main
         );
         SignupFormLayout.setVerticalGroup(
             SignupFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,15 +277,8 @@ public class Signup extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(Separator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-<<<<<<< HEAD
                 .addComponent(LoginLink)
                 .addGap(106, 106, 106))
-=======
-                .addComponent(ChangePasswordHyperlink)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LoginLink)
-                .addGap(84, 84, 84))
->>>>>>> main
         );
 
         EmailIconInvalid.setVisible(false);
@@ -516,11 +450,7 @@ public class Signup extends javax.swing.JFrame {
             setVisible(false);
             dispose();
             
-<<<<<<< HEAD
             Login login = Login.getInstance();
-=======
-            Login login = new Login();
->>>>>>> main
             SwingUtilities.invokeLater(() -> {
                 login.setVisible(true);
             });
@@ -530,12 +460,8 @@ public class Signup extends javax.swing.JFrame {
     
     private boolean isEmailAlreadyExists(String email) {
         try {
-<<<<<<< HEAD
             user.SQLMethods sqlMethods = new user.SQLMethods();
             Connection connection = sqlMethods.getConnection();
-=======
-            Connection connection = SQLMethods.getConnection();
->>>>>>> main
             String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, email);
@@ -564,19 +490,12 @@ public class Signup extends javax.swing.JFrame {
                     EmailWarning.setForeground(new java.awt.Color(255, 255, 0));
                     EmailIconInvalid.setVisible(true);
                 } else {
-<<<<<<< HEAD
                     user.SQLMethods sqlMethods = new user.SQLMethods();
-=======
->>>>>>> main
                     HashMap<String, String> userData = new HashMap<>();
                     userData.put("email", email);
                     userData.put("password", password);
                 
-<<<<<<< HEAD
                     sqlMethods.createUser(userData);
-=======
-                    SQLMethods.create(userData);
->>>>>>> main
                     System.out.println("New user inserted successfully!");
                     SuccessfulSignup.setVisible(true);
                     redirectTimer.start();
@@ -589,11 +508,7 @@ public class Signup extends javax.swing.JFrame {
         setVisible(false);
         dispose();
 
-<<<<<<< HEAD
         Login login = Login.getInstance();
-=======
-        Login login = new Login();
->>>>>>> main
         SwingUtilities.invokeLater(() -> {
             login.setVisible(true);
         });
@@ -602,25 +517,7 @@ public class Signup extends javax.swing.JFrame {
        /**
      * @param args the command line arguments
      */
-<<<<<<< HEAD
     // Variables declaration - do not modify//GEN-BEGIN:variables
-=======
-    public static void main(String args[]) {
-        try{
-            UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (UnsupportedLookAndFeelException e){}
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Signup().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel ChangePasswordHyperlink;
->>>>>>> main
     private javax.swing.JPasswordField ConfirmPasswordField;
     private javax.swing.JLabel ConfirmPasswordIconInvalid;
     private javax.swing.JLabel ConfirmPasswordLabel;

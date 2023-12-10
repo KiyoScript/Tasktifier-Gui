@@ -4,10 +4,7 @@
  */
 package TasktifierGUI;
 
-<<<<<<< HEAD
 import user.SQLMethods;
-=======
->>>>>>> main
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.sql.SQLException;
 import javax.swing.*;
@@ -16,7 +13,6 @@ import javax.swing.*;
  * @author Daniel
  */
 public class Index {
-<<<<<<< HEAD
     static {
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
@@ -36,26 +32,18 @@ public class Index {
         Index.mainFrame = mainFrame;
     }
     
-=======
-
->>>>>>> main
     /**
      * @param args the command line arguments
      * @throws java.sql.SQLException
      */
-<<<<<<< HEAD
     
     public static void main(String[] args) throws SQLException {
         user.Authenticator loginChecking = new user.Authenticator();
-=======
-    public static void main(String[] args) throws SQLException {
->>>>>>> main
         SQLMethods.testConnection();
         
         try{
             UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (UnsupportedLookAndFeelException e){}
-<<<<<<< HEAD
         
         Login loginFrame = Login.getInstance();
         
@@ -69,12 +57,5 @@ public class Index {
                 loginFrame.setVisible(true);
             });
         }
-=======
-        Login loginFrame = new Login();
-        
-        java.awt.EventQueue.invokeLater(() -> {
-            loginFrame.setVisible(true);
-        });
->>>>>>> main
     }
 }

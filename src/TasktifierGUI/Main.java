@@ -33,9 +33,12 @@ public class Main extends javax.swing.JFrame {
         user.SQLMethods method = new user.SQLMethods();
         int userID = user.getLoggedInUserID();
         customComponents.LiveLocalDateAndTime liveDateTime = new customComponents.LiveLocalDateAndTime();
-        
-        LocalTime currentTime = LocalTime.now();
-        long delayMillis = 1000 - currentTime.getNano() / 1_000_000;
+        final String[] taskNameDueDate = {""};
+        final String[] notesDueDate = {""};
+        final String[] taskNameReminder = {""};
+        final String[] notesReminder = {""};
+        popupFrame.StartTimeReminderFrame[] startTimeReminderFrame = {null};
+        popupFrame.ReminderFrame[] reminderFrame = {null}; 
         
         this.setUndecorated(true);
         
@@ -113,12 +116,26 @@ public class Main extends javax.swing.JFrame {
         try {
             List<LocalDateTime> dueDatesWithStartTime = method.readDueDateWithStartTime(userID);
             List<LocalTime> reminder = method.readReminder(userID);
-
+            
+            
             for (LocalDateTime dateTime : dueDatesWithStartTime) {
                 System.out.println("DateTime: " + dateTime + ", and CurrentDateTime " + liveDateTime.getCurrentDateTime() + " is equal? " + liveDateTime.getCurrentDateTime() + "\n");
                 System.out.println(dateTime);
                 if (dateTime.equals(liveDateTime.getCurrentDateTime())) {
                     timerHolder[0].stop();
+                    LocalDate datePart = dateTime.toLocalDate();
+                    LocalTime timePart = dateTime.toLocalTime();
+
+                    try {
+                        List<Object[]> result = method.readTaskNameAndNotesFromDueDatesWithStartTime(userID, datePart, timePart);
+
+                        for (Object[] row : result) {
+                            taskNameDueDate[0] = (String) row[0];
+                            notesDueDate[0] = (String) row[1];
+
+                            startTimeReminderFrame[0] = new popupFrame.StartTimeReminderFrame(taskNameDueDate[0], notesDueDate[0]);
+                        }
+                    } catch (SQLException f) {}
                     try {
                         File musicPath = new File("src/TasktifierGUI/assets/audios/StartTaskAudio.wav");
                         if(musicPath.exists()){
@@ -130,20 +147,7 @@ public class Main extends javax.swing.JFrame {
                             System.out.println("Not OK.");
                         }
                     } catch (IOException | LineUnavailableException | UnsupportedAudioFileException g){}
-                    LocalDate datePart = dateTime.toLocalDate();
-                    LocalTime timePart = dateTime.toLocalTime();
-
-                    try {
-                        List<Object[]> result = method.readTaskNameAndNotesFromDueDatesWithStartTime(userID, datePart, timePart);
-
-                        for (Object[] row : result) {
-                            String taskName = (String) row[0];
-                            String notes = (String) row[1];
-
-                            popupFrame.StartTimeReminderFrame startTimeReminderFrame = new popupFrame.StartTimeReminderFrame(taskName, notes);
-                            startTimeReminderFrame.setVisible(true);
-                        }
-                    } catch (SQLException f) {}
+                    startTimeReminderFrame[0].setVisible(true);
                     Timer restartTimer = new Timer(60000, (ActionEvent restartEvent) -> {
                         timerHolder[0].setInitialDelay((int) (1000 - System.currentTimeMillis() % 1000));
                         timerHolder[0].start();
@@ -158,6 +162,19 @@ public class Main extends javax.swing.JFrame {
                 System.out.println("Time: " + time + ", and CurrentTime " + liveDateTime.getCurrentTime() + " is equal? " + time.equals(liveDateTime.getCurrentTime()) + "\n");
                 if (time.equals(liveDateTime.getCurrentTime())) {
                     timerHolder[0].stop();
+                    LocalTime timePart = liveDateTime.getCurrentTime();
+
+                    try {
+                        List<Object[]> result = method.readTaskNameAndNotesFromReminder(userID, timePart);
+
+                        for (Object[] row : result) {
+                            taskNameReminder[0] = (String) row[0];
+                            notesReminder[0] = (String) row[1];
+
+                            reminderFrame[0] = new popupFrame.ReminderFrame(taskNameReminder[0], notesReminder[0]);   
+                        }
+
+                    } catch (SQLException f) {}  
                     try {
                         File musicPath = new File("src/TasktifierGUI/assets/audios/ReminderAudio.wav");
                         if(musicPath.exists()){
@@ -169,20 +186,7 @@ public class Main extends javax.swing.JFrame {
                             System.out.println("Not OK.");
                         }
                     } catch (IOException | LineUnavailableException | UnsupportedAudioFileException g){}
-                    LocalTime timePart = liveDateTime.getCurrentTime();
-
-                    try {
-                        List<Object[]> result = method.readTaskNameAndNotesFromReminder(userID, timePart);
-
-                        for (Object[] row : result) {
-                            String taskName = (String) row[0];
-                            String notes = (String) row[1];
-
-                            popupFrame.ReminderFrame reminderFrame = new popupFrame.ReminderFrame(taskName, notes);
-                            reminderFrame.setVisible(true);   
-                        }
-
-                    } catch (SQLException f) {}
+                    reminderFrame[0].setVisible(true);
                     Timer restartTimer = new Timer(60000, (ActionEvent restartEvent) -> {
                         timerHolder[0].setInitialDelay((int) (1000 - System.currentTimeMillis() % 1000));
                         timerHolder[0].start();
@@ -193,17 +197,10 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } catch (SQLException ex) {}
-    });
+        });
 
-    timerHolder[0].setInitialDelay((int) (1000 - System.currentTimeMillis() % 1000));
-    timerHolder[0].start();
-        
-//        customComponents.TableActionEvent event = new customComponents.TableActionEvent(){
-//            @Override
-//            public void exit(){
-//                System.exit(0);
-//            }
-//        };
+        timerHolder[0].setInitialDelay((int) (1000 - System.currentTimeMillis() % 1000));
+        timerHolder[0].start();
 
         customComponents.TableActionEvent event = new customComponents.TableActionEvent(){
             @Override
