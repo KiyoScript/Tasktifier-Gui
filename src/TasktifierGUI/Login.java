@@ -281,6 +281,7 @@ public class Login extends javax.swing.JFrame {
         LoginCover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TasktifierGUI/assets/images/login.png"))); // NOI18N
 
         LoginMessage.setForeground(new java.awt.Color(255, 65, 95));
+        LoginMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LoginMessage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TasktifierGUI/assets/images/invalid-25.png"))); // NOI18N
         LoginMessage.setText("User doesn't exist or wrong password.");
         LoginMessage.setMaximumSize(new java.awt.Dimension(38, 25));
@@ -294,13 +295,10 @@ public class Login extends javax.swing.JFrame {
             .addGroup(FrameContainerLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(FrameContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(FrameContainerLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(LoginCover, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(FrameContainerLayout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(LoginMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40)
+                .addGroup(FrameContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(LoginCover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LoginMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(101, Short.MAX_VALUE))
         );
         FrameContainerLayout.setVerticalGroup(
@@ -423,16 +421,27 @@ public class Login extends javax.swing.JFrame {
 
         if(isValidEmail && isValidPassword){
             if (authenticator.isValidLogin(email, password)) {
-                if (RememberMeCheckbox.isSelected()) {
-                    savePreferences(email, password);
+                if(authenticator.isDisabled(email)){
+                    LoginMessage.setText("Account disabled. Contact Administrator to reactivate your account.");
+                    LoginMessage.setForeground(new Color(255, 65, 95));
+                    LoginMessage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TasktifierGUI/assets/images/invalid-25.png")));
+                    LoginMessage.setVisible(true);
+                } else{
+                    if (RememberMeCheckbox.isSelected()) {
+                        savePreferences(email, password);
+                    }
+                    int userID = authenticator.getLoggedInUserID(email);
+                    authenticator.updateLoginStatus(userID, true);
+                    if(authenticator.isAdminLogin()){
+                        LoginMessage.setText("Hello Creator. Redirecting you to admin page.");
+                    } else {
+                        LoginMessage.setText("Login successful. Welcome to Tasktifier!");
+                    }
+                    LoginMessage.setForeground(new Color(144, 238, 144));
+                    LoginMessage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TasktifierGUI/assets/images/valid.png")));
+                    LoginMessage.setVisible(true);
+                    redirectTimer.start();
                 }
-                int userID = authenticator.getLoggedInUserID(email);
-                authenticator.updateLoginStatus(userID, true);
-                LoginMessage.setText("Login successful. Welcome to Tasktifier!");
-                LoginMessage.setForeground(new Color(144, 238, 144));
-                LoginMessage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TasktifierGUI/assets/images/valid.png")));
-                LoginMessage.setVisible(true);
-                redirectTimer.start();
             } else {
                 LoginMessage.setText("User doesn't exist or wrong password!");
                 LoginMessage.setForeground(new Color(255, 65, 95));
@@ -443,14 +452,22 @@ public class Login extends javax.swing.JFrame {
     }
     
     private void initializeTimer() {
+        user.Authenticator user = new user.Authenticator();
         redirectTimer = new Timer(REDIRECT_DELAY, (ActionEvent e) -> {
             setVisible(false);
             dispose();
             
-            Main main = new Main();
+            if(user.isAdminLogin()){
+                Admin admin = new Admin();
                 SwingUtilities.invokeLater(() -> {
-                main.setVisible(true);
-            });
+                    admin.setVisible(true);
+                });
+            } else {
+                Main main = new Main();
+                SwingUtilities.invokeLater(() -> {
+                    main.setVisible(true);
+                });
+            }
                 
             LoginMessage.setVisible(false);
             redirectTimer.stop();

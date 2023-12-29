@@ -63,6 +63,72 @@ public class Authenticator {
         return false;
     }
     
+    public boolean isAdminLogin() {
+        String query = "SELECT COUNT(*) FROM users WHERE email = 'admin@tasktifier.com' AND password = 'admin123' AND isLoggedIn = 1";
+
+        try (Connection connection = user.SQLMethods.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery()) {
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            return false;
+        }
+        return false;
+    }
+    
+    public boolean isDisabled(String email) {
+        try {
+            String checkStatusQuery = "SELECT status FROM users WHERE email = ?";
+
+            try (Connection connection = user.SQLMethods.getConnection();
+                PreparedStatement checkStatusStatement = connection.prepareStatement(checkStatusQuery)) {
+
+                checkStatusStatement.setString(1, email);
+
+                try (ResultSet resultSet = checkStatusStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        String status = resultSet.getString("status");
+                        return "DISABLED".equals(status);
+                    }
+                }
+            }
+        } catch (SQLException e) {}
+
+        return false;
+    }
+    
+    public boolean isIDAlreadyExists(int userId) {
+        String query = "SELECT id FROM users WHERE id = ?";
+        try (Connection connection = user.SQLMethods.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, userId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
+    public boolean isEmailAlreadyExists(String email) {
+        String query = "SELECT email FROM users WHERE email = ?";
+        try (Connection connection = user.SQLMethods.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
     public int getLoggedInUserID() {
         String query = "SELECT id FROM users WHERE isLoggedIn = 1";
 

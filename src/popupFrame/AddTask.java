@@ -39,7 +39,6 @@ public class AddTask extends javax.swing.JFrame {
         Color borderColor = Color.WHITE;
         MatteBorder border = new MatteBorder(borderSize, borderSize, borderSize, borderSize, borderColor);
         this.getRootPane().setBorder(border);
-        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -72,10 +71,10 @@ public class AddTask extends javax.swing.JFrame {
         StartTimeShowClock = new javax.swing.JButton();
         StartTimeTextField = new javax.swing.JTextField();
         StartTimeLabel = new javax.swing.JLabel();
-        CategoryLabel = new javax.swing.JLabel();
-        CategoryLists = new javax.swing.JComboBox<>();
+        SnoozeLabel = new javax.swing.JLabel();
         AddTaskButton = new javax.swing.JButton();
         AddTaskNotice = new javax.swing.JLabel();
+        SnoozeSpinner = new customComponents.IntegerSpinner();
         TasksPanelHeader = new javax.swing.JPanel();
         ExitButton = new javax.swing.JButton();
         FirstCircle = new customComponents.Circles(255, 95, 87);
@@ -215,12 +214,8 @@ public class AddTask extends javax.swing.JFrame {
         StartTimeLabel.setForeground(new java.awt.Color(166, 166, 166));
         StartTimeLabel.setText("Start Time");
 
-        CategoryLabel.setForeground(new java.awt.Color(166, 166, 166));
-        CategoryLabel.setText("Category");
-
-        CategoryLists.setBackground(new java.awt.Color(21, 28, 26));
-        CategoryLists.setForeground(new java.awt.Color(166, 166, 166));
-        CategoryLists.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Work", "Personal", "Wishlist", "Birthday" }));
+        SnoozeLabel.setForeground(new java.awt.Color(166, 166, 166));
+        SnoozeLabel.setText("Snooze (minutes)");
 
         AddTaskButton.setBackground(new java.awt.Color(0, 123, 255));
         AddTaskButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -241,6 +236,9 @@ public class AddTask extends javax.swing.JFrame {
         AddTaskNotice.setMinimumSize(new java.awt.Dimension(38, 25));
         AddTaskNotice.setPreferredSize(new java.awt.Dimension(38, 25));
 
+        SnoozeSpinner.setBackground(new java.awt.Color(21, 28, 26));
+        SnoozeSpinner.setForeground(new java.awt.Color(166, 166, 166));
+
         javax.swing.GroupLayout TaskDetailsPanelLayout = new javax.swing.GroupLayout(TaskDetailsPanel);
         TaskDetailsPanel.setLayout(TaskDetailsPanelLayout);
         TaskDetailsPanelLayout.setHorizontalGroup(
@@ -252,7 +250,7 @@ public class AddTask extends javax.swing.JFrame {
                     .addComponent(NotesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addGroup(TaskDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(TaskDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(TaskDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(TaskDetailsPanelLayout.createSequentialGroup()
                             .addGroup(TaskDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(DueDateLabel)
@@ -263,16 +261,15 @@ public class AddTask extends javax.swing.JFrame {
                                 .addComponent(ReminderTimeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(ReminderTimeShowClock))
+                        .addGroup(TaskDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(StartTimeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SnoozeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(TaskDetailsPanelLayout.createSequentialGroup()
-                            .addGroup(TaskDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(TaskDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(StartTimeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(CategoryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(StartTimeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(StartTimeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(StartTimeShowClock))
-                        .addComponent(CategoryLists, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(AddTaskButton))
+                            .addComponent(StartTimeShowClock)))
+                    .addComponent(AddTaskButton)
+                    .addComponent(SnoozeSpinner, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TaskDetailsPanelLayout.createSequentialGroup()
                 .addContainerGap(37, Short.MAX_VALUE)
@@ -305,13 +302,13 @@ public class AddTask extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(StartTimeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(TaskDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(TaskDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(StartTimeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(StartTimeShowClock, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(CategoryLabel)
+                        .addComponent(SnoozeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CategoryLists, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SnoozeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(AddTaskButton))
                     .addComponent(NotesScrollPane))
@@ -439,6 +436,7 @@ public class AddTask extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void ReminderTimeShowClockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReminderTimeShowClockActionPerformed
@@ -477,8 +475,8 @@ public class AddTask extends javax.swing.JFrame {
         return NotesTextArea.getText();
     }
 
-    private String getCategory() {
-        return CategoryLists.getSelectedItem().toString();
+    private int getSnooze() {
+        return (Integer) SnoozeSpinner.getValue();
     }
     
     private void AddTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddTaskButtonActionPerformed
@@ -498,7 +496,7 @@ public class AddTask extends javax.swing.JFrame {
         String taskName = getTaskName();
         String dueDateString = getDueDate();
         String notes = getNotes();
-        String category = getCategory();
+        int snooze = getSnooze();
         
         
         if(!dueDateString.isEmpty()){
@@ -553,7 +551,7 @@ public class AddTask extends javax.swing.JFrame {
             AddTaskNotice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/TasktifierGUI/assets/images/valid.png")));
             AddTaskNotice.setForeground(new Color(144, 238, 144));
             AddTaskNotice.setVisible(true);
-            addTask.createTask(taskName, dueDate, startTime, reminder, notes, category, userId);
+            addTask.createTask(taskName, dueDate, startTime, reminder, notes, userId, snooze);
             initializeTimer();
             redirectTimer.start();
         }
@@ -565,8 +563,14 @@ public class AddTask extends javax.swing.JFrame {
             dispose();
                 
             AddTaskNotice.setVisible(false);
-            redirectTimer.stop();
+            if(TasktifierGUI.Index.getMainInstance() != null){
+                TasktifierGUI.Index.getMainInstance().dispose();
+            }
+            if(TasktifierGUI.Main.getInstance() != null){
+                TasktifierGUI.Main.getInstance().dispose();
+            }
             new customComponents.MainFrameRefresher();
+            redirectTimer.stop();
         });
     }
     /**
@@ -578,8 +582,6 @@ public class AddTask extends javax.swing.JFrame {
     private javax.swing.JLabel AddTaskNotice;
     private javax.swing.JPanel AddTasksContainer;
     private javax.swing.JPanel AddTasksPanel;
-    private javax.swing.JLabel CategoryLabel;
-    private javax.swing.JComboBox<String> CategoryLists;
     private com.raven.datechooser.DateChooser DueDateChooser;
     private javax.swing.JLabel DueDateLabel;
     private javax.swing.JTextField DueDateTextField;
@@ -595,6 +597,8 @@ public class AddTask extends javax.swing.JFrame {
     private javax.swing.JButton ReminderTimeShowClock;
     private javax.swing.JTextField ReminderTimeTextField;
     private javax.swing.JPanel SecondCircle;
+    private javax.swing.JLabel SnoozeLabel;
+    private customComponents.IntegerSpinner SnoozeSpinner;
     private javax.swing.JLabel StartTimeLabel;
     private com.raven.swing.TimePicker StartTimePicker;
     private javax.swing.JButton StartTimeShowClock;

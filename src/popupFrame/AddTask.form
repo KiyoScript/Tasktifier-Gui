@@ -42,7 +42,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -225,7 +225,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="DueDateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -239,20 +239,18 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="ReminderTimeShowClock" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="StartTimeLabel" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="CategoryLabel" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Component id="StartTimeTextField" min="-2" pref="63" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="StartTimeLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="SnoozeLabel" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="StartTimeTextField" min="-2" pref="63" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="StartTimeShowClock" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="CategoryLists" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <Component id="AddTaskButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="SnoozeSpinner" alignment="0" min="-2" pref="72" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -295,14 +293,14 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="StartTimeLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="StartTimeTextField" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="StartTimeShowClock" alignment="0" min="-2" pref="18" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="StartTimeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="StartTimeShowClock" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="CategoryLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="SnoozeLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="CategoryLists" min="-2" max="-2" attributes="0"/>
+                              <Component id="SnoozeSpinner" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="AddTaskButton" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -493,34 +491,13 @@
                 <Property name="text" type="java.lang.String" value="Start Time"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="CategoryLabel">
+            <Component class="javax.swing.JLabel" name="SnoozeLabel">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="a6" green="a6" red="a6" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Category"/>
+                <Property name="text" type="java.lang.String" value="Snooze (minutes)"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="CategoryLists">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="1a" green="1c" red="15" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="a6" green="a6" red="a6" type="rgb"/>
-                </Property>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Work"/>
-                    <StringItem index="1" value="Personal"/>
-                    <StringItem index="2" value="Wishlist"/>
-                    <StringItem index="3" value="Birthday"/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="AddTaskButton">
               <Properties>
@@ -561,6 +538,16 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="AddTaskNotice.setVisible(false);"/>
               </AuxValues>
+            </Component>
+            <Component class="customComponents.IntegerSpinner" name="SnoozeSpinner">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="1a" green="1c" red="15" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="a6" green="a6" red="a6" type="rgb"/>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

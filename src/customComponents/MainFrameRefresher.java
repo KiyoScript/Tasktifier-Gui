@@ -10,7 +10,7 @@ package customComponents;
  */
 public class MainFrameRefresher {
     public MainFrameRefresher(){
-        TasktifierGUI.Main currentMainFrame = TasktifierGUI.Index.getInstance();
+        TasktifierGUI.Main currentMainFrame = TasktifierGUI.Index.getMainInstance();
         currentMainFrame.dispose();
             
         TasktifierGUI.Main newMainFrame = new TasktifierGUI.Main();

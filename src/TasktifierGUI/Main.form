@@ -80,8 +80,14 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
-                  <Component id="TasksInterface" min="-2" pref="816" max="-2" attributes="0"/>
-                  <EmptySpace pref="124" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="SelectMusicPanel" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="TasksInterface" min="-2" pref="816" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="118" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -89,8 +95,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                  <Component id="TasksInterface" min="-2" pref="636" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="TasksInterface" min="-2" pref="492" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="SelectMusicPanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="128" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -147,8 +155,7 @@
                               <Component id="TasksListLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="TasksScrollPane" pref="571" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="TasksScrollPane" pref="427" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -196,7 +203,7 @@
                               <Data value="07:00 P.M."/>
                               <Data value="null"/>
                             </Column>
-                            <Column editable="false" title="Category" type="java.lang.Object">
+                            <Column editable="false" title="Snooze" type="java.lang.Object">
                               <Data value="Work"/>
                               <Data value="null"/>
                             </Column>
@@ -262,6 +269,89 @@
                 </Component>
               </SubComponents>
             </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="SelectMusicPanel">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="1a" green="1c" red="15" type="rgb"/>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="SelectMusicLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="SelectMusicButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="SelectedMusicLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="SelectedMusicName" min="-2" pref="250" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="SelectMusicLabel" min="-2" pref="24" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="SelectMusicButton" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="SelectedMusicLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="SelectedMusicName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="SelectMusicLabel">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="24" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="ff" red="66" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="SELECT MUSIC"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="SelectMusicButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Select"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="SelectedMusicLabel">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="1a" green="1c" red="15" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="a6" green="a6" red="a6" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Selected Music:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="SelectedMusicName">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="1a" green="1c" red="15" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="a6" green="a6" red="a6" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="ReminderAudio.wav"/>
+                <Property name="focusable" type="boolean" value="false"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
@@ -640,7 +730,7 @@
                             <Column editable="false" title="Due Date" type="java.lang.Object"/>
                             <Column editable="false" title="Start Time" type="java.lang.Object"/>
                             <Column editable="false" title="Reminder" type="java.lang.Object"/>
-                            <Column editable="false" title="Category" type="java.lang.Object"/>
+                            <Column editable="false" title="Snooze" type="java.lang.Object"/>
                             <Column editable="false" title="Action" type="java.lang.Object"/>
                           </Table>
                         </Property>
@@ -812,7 +902,7 @@
                             <Column editable="false" title="Due Date" type="java.lang.Object"/>
                             <Column editable="false" title="Start Time" type="java.lang.Object"/>
                             <Column editable="false" title="Reminder" type="java.lang.Object"/>
-                            <Column editable="false" title="Category" type="java.lang.Object"/>
+                            <Column editable="false" title="Snooze" type="java.lang.Object"/>
                             <Column editable="false" title="Status" type="java.lang.Object"/>
                           </Table>
                         </Property>

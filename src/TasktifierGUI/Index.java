@@ -21,7 +21,7 @@ public class Index {
     
     private static Main mainFrame = new Main();
     
-    public static Main getInstance() {
+    public static Main getMainInstance() {
         if (mainFrame == null) {
             mainFrame = new Main();
         }
@@ -30,6 +30,19 @@ public class Index {
     
     public static void setMainFrame(Main mainFrame) {
         Index.mainFrame = mainFrame;
+    }
+    
+    private static Admin adminFrame = new Admin();
+    
+    public static Admin getAdminInstance() {
+        if (adminFrame == null) {
+            adminFrame = new Admin();
+        }
+        return adminFrame;
+    }
+    
+    public static void setAdminFrame(Admin adminFrame) {
+        Index.adminFrame = adminFrame;
     }
     
     /**
@@ -48,10 +61,15 @@ public class Index {
         Login loginFrame = Login.getInstance();
         
         if(loginChecking.hasLoggedInUsers()){
-            java.awt.EventQueue.invokeLater(() -> {
-//                System.out.println(mainFrame != null);
-                mainFrame.setVisible(true);
-            });
+            if(loginChecking.isAdminLogin()){
+                java.awt.EventQueue.invokeLater(() -> {
+                    adminFrame.setVisible(true);
+                });
+            } else {
+                java.awt.EventQueue.invokeLater(() -> {
+                    mainFrame.setVisible(true);
+                });
+            }
         } else{
             java.awt.EventQueue.invokeLater(() -> {
                 loginFrame.setVisible(true);

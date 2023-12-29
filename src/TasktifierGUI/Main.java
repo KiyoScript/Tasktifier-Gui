@@ -17,7 +17,16 @@ import java.time.LocalTime;
 import javax.swing.*;
 import java.util.List;
 import javax.sound.sampled.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 /**
  *
  * @author Daniel
@@ -25,6 +34,9 @@ import javax.swing.table.DefaultTableModel;
 public class Main extends javax.swing.JFrame {
     private static Main instance;
     private TrayIcon trayIcon;
+    public static File reminderMusicPath = new File("src/TasktifierGUI/assets/audios/ReminderAudio.wav");
+    public static popupFrame.StartTimeReminderFrame startTimeReminderFrame = new popupFrame.StartTimeReminderFrame("DO IT NOW!", "DO IT NOW!");
+    public static popupFrame.ReminderFrame reminderFrame = new popupFrame.ReminderFrame("Just A Reminder", "Just A Reminder");
     /**
      * Creates new form Main
      */
@@ -37,8 +49,7 @@ public class Main extends javax.swing.JFrame {
         final String[] notesDueDate = {""};
         final String[] taskNameReminder = {""};
         final String[] notesReminder = {""};
-        popupFrame.StartTimeReminderFrame[] startTimeReminderFrame = {null};
-        popupFrame.ReminderFrame[] reminderFrame = {null}; 
+        
         
         this.setUndecorated(true);
         
@@ -55,6 +66,10 @@ public class Main extends javax.swing.JFrame {
         } catch (SQLException ex) {}
     
         initComponents();
+        
+        SelectMusicButton.addActionListener((ActionEvent e) -> {
+            showFileChooser();
+        });
         
         try {
             int countTodayTasks = method.readCountTodayTasks(userID);
@@ -77,7 +92,7 @@ public class Main extends javax.swing.JFrame {
 
             DefaultTableModel model = new javax.swing.table.DefaultTableModel(
                     tasksArray,
-                    new String[]{"Task Name", "Due Date", "Start Time", "Reminder", "Category", "Action"}
+                    new String[]{"Task Name", "Due Date", "Start Time", "Reminder", "Snooze", "Action"}
             );
 
             TasksTable.setModel(model);
@@ -92,7 +107,7 @@ public class Main extends javax.swing.JFrame {
     
             DefaultTableModel model = new javax.swing.table.DefaultTableModel(
             todayTasksArray,
-                new String[]{"Task Name", "Due Date", "Start Time", "Reminder", "Category", "Action"}
+                new String[]{"Task Name", "Due Date", "Start Time", "Reminder", "Snooze", "Action"}
             );
     
             TodayTable.setModel(model);
@@ -115,12 +130,10 @@ public class Main extends javax.swing.JFrame {
         timerHolder[0] = new Timer(1000, (ActionEvent e) -> {
         try {
             List<LocalDateTime> dueDatesWithStartTime = method.readDueDateWithStartTime(userID);
-            List<LocalTime> reminder = method.readReminder(userID);
+            List<LocalTime> snoozeReminder = method.readSnoozeReminder(userID);
             
             
             for (LocalDateTime dateTime : dueDatesWithStartTime) {
-                System.out.println("DateTime: " + dateTime + ", and CurrentDateTime " + liveDateTime.getCurrentDateTime() + " is equal? " + liveDateTime.getCurrentDateTime() + "\n");
-                System.out.println(dateTime);
                 if (dateTime.equals(liveDateTime.getCurrentDateTime())) {
                     timerHolder[0].stop();
                     LocalDate datePart = dateTime.toLocalDate();
@@ -133,7 +146,7 @@ public class Main extends javax.swing.JFrame {
                             taskNameDueDate[0] = (String) row[0];
                             notesDueDate[0] = (String) row[1];
 
-                            startTimeReminderFrame[0] = new popupFrame.StartTimeReminderFrame(taskNameDueDate[0], notesDueDate[0]);
+                            startTimeReminderFrame = new popupFrame.StartTimeReminderFrame(taskNameDueDate[0], notesDueDate[0]);
                         }
                     } catch (SQLException f) {}
                     try {
@@ -147,7 +160,7 @@ public class Main extends javax.swing.JFrame {
                             System.out.println("Not OK.");
                         }
                     } catch (IOException | LineUnavailableException | UnsupportedAudioFileException g){}
-                    startTimeReminderFrame[0].setVisible(true);
+                    startTimeReminderFrame.setVisible(true);
                     Timer restartTimer = new Timer(60000, (ActionEvent restartEvent) -> {
                         timerHolder[0].setInitialDelay((int) (1000 - System.currentTimeMillis() % 1000));
                         timerHolder[0].start();
@@ -158,10 +171,10 @@ public class Main extends javax.swing.JFrame {
                 }
             }
 
-            for (LocalTime time : reminder) {
-                System.out.println("Time: " + time + ", and CurrentTime " + liveDateTime.getCurrentTime() + " is equal? " + time.equals(liveDateTime.getCurrentTime()) + "\n");
+            for (LocalTime time : snoozeReminder) {
                 if (time.equals(liveDateTime.getCurrentTime())) {
                     timerHolder[0].stop();
+                    method.updateSnoozeReminder(time, userID);
                     LocalTime timePart = liveDateTime.getCurrentTime();
 
                     try {
@@ -171,22 +184,37 @@ public class Main extends javax.swing.JFrame {
                             taskNameReminder[0] = (String) row[0];
                             notesReminder[0] = (String) row[1];
 
-                            reminderFrame[0] = new popupFrame.ReminderFrame(taskNameReminder[0], notesReminder[0]);   
+                            reminderFrame = new popupFrame.ReminderFrame(taskNameReminder[0], notesReminder[0]);   
                         }
 
                     } catch (SQLException f) {}  
-                    try {
-                        File musicPath = new File("src/TasktifierGUI/assets/audios/ReminderAudio.wav");
-                        if(musicPath.exists()){
-                            AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                    if(reminderMusicPath.exists()){
+                        if(isMp3File(reminderMusicPath)){
+                            try {
+                                FileInputStream fileInputStream = new FileInputStream(reminderMusicPath);
+                                Player player = new Player(fileInputStream);
+                                Thread playerThread = new Thread(() -> {
+                                    try {
+                                        System.out.println("Song is playing...");
+                                        player.play();
+                                    } catch (JavaLayerException i) {
+                                        System.out.println(i);
+                                    }
+                                });
+                                playerThread.start();
+                            } catch (FileNotFoundException | JavaLayerException g) {
+                                System.out.println(g);
+                            }
+                        } else if(isWavFile(reminderMusicPath)){
+                            AudioInputStream audioInput = AudioSystem.getAudioInputStream(reminderMusicPath);
                             Clip clip = AudioSystem.getClip();
                             clip.open(audioInput);
                             clip.start();
-                        } else{
-                            System.out.println("Not OK.");
                         }
-                    } catch (IOException | LineUnavailableException | UnsupportedAudioFileException g){}
-                    reminderFrame[0].setVisible(true);
+                    } else{
+                        System.out.println("Not OK.");
+                    }
+                    reminderFrame.setVisible(true);
                     Timer restartTimer = new Timer(60000, (ActionEvent restartEvent) -> {
                         timerHolder[0].setInitialDelay((int) (1000 - System.currentTimeMillis() % 1000));
                         timerHolder[0].start();
@@ -196,7 +224,13 @@ public class Main extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (SQLException ex) {}
+        } catch (SQLException ex) {} catch (LineUnavailableException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
         timerHolder[0].setInitialDelay((int) (1000 - System.currentTimeMillis() % 1000));
@@ -265,6 +299,11 @@ public class Main extends javax.swing.JFrame {
         TasksScrollPane = new javax.swing.JScrollPane();
         TasksTable = new customComponents.TableDark();
         TasksListLabel = new javax.swing.JLabel();
+        SelectMusicPanel = new javax.swing.JPanel();
+        SelectMusicLabel = new javax.swing.JLabel();
+        SelectMusicButton = new javax.swing.JButton();
+        SelectedMusicLabel = new javax.swing.JLabel();
+        SelectedMusicName = new javax.swing.JTextField();
         TasksPanelHeader = new javax.swing.JPanel();
         TasksPanelHeaderButtons = roundedPanel;
         TasksButton = new javax.swing.JButton();
@@ -322,7 +361,7 @@ public class Main extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Task Name", "Due Date", "Start Time", "Reminder", "Category", "Action"
+                "Task Name", "Due Date", "Start Time", "Reminder", "Snooze", "Action"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -367,11 +406,56 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(AddTaskButton))
                     .addComponent(TasksListLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TasksScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(TasksScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE))
         );
 
         TasksInterface.setViewportView(TasksList);
+
+        SelectMusicPanel.setBackground(new java.awt.Color(21, 28, 26));
+
+        SelectMusicLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        SelectMusicLabel.setForeground(new java.awt.Color(102, 255, 0));
+        SelectMusicLabel.setText("SELECT MUSIC");
+
+        SelectMusicButton.setText("Select");
+
+        SelectedMusicLabel.setBackground(new java.awt.Color(21, 28, 26));
+        SelectedMusicLabel.setForeground(new java.awt.Color(166, 166, 166));
+        SelectedMusicLabel.setText("Selected Music:");
+
+        SelectedMusicName.setEditable(false);
+        SelectedMusicName.setBackground(new java.awt.Color(21, 28, 26));
+        SelectedMusicName.setForeground(new java.awt.Color(166, 166, 166));
+        SelectedMusicName.setText("ReminderAudio.wav");
+        SelectedMusicName.setFocusable(false);
+
+        javax.swing.GroupLayout SelectMusicPanelLayout = new javax.swing.GroupLayout(SelectMusicPanel);
+        SelectMusicPanel.setLayout(SelectMusicPanelLayout);
+        SelectMusicPanelLayout.setHorizontalGroup(
+            SelectMusicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SelectMusicPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(SelectMusicLabel)
+                .addGap(18, 18, 18)
+                .addComponent(SelectMusicButton)
+                .addGap(18, 18, 18)
+                .addComponent(SelectedMusicLabel)
+                .addGap(18, 18, 18)
+                .addComponent(SelectedMusicName, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        SelectMusicPanelLayout.setVerticalGroup(
+            SelectMusicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SelectMusicPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(SelectMusicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SelectMusicLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(SelectMusicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(SelectMusicButton, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SelectedMusicLabel)
+                        .addComponent(SelectedMusicName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout TasksPanelContainerLayout = new javax.swing.GroupLayout(TasksPanelContainer);
         TasksPanelContainer.setLayout(TasksPanelContainerLayout);
@@ -379,15 +463,21 @@ public class Main extends javax.swing.JFrame {
             TasksPanelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TasksPanelContainerLayout.createSequentialGroup()
                 .addGap(125, 125, 125)
-                .addComponent(TasksInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addGroup(TasksPanelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SelectMusicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(TasksPanelContainerLayout.createSequentialGroup()
+                        .addComponent(TasksInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 118, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         TasksPanelContainerLayout.setVerticalGroup(
             TasksPanelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TasksPanelContainerLayout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addComponent(TasksInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addComponent(TasksInterface, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(SelectMusicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         TasksPanelHeader.setBackground(new java.awt.Color(26, 36, 33));
@@ -586,7 +676,7 @@ public class Main extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Task Name", "Due Date", "Start Time", "Reminder", "Category", "Action"
+                "Task Name", "Due Date", "Start Time", "Reminder", "Snooze", "Action"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -664,7 +754,7 @@ public class Main extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Task Name", "Due Date", "Start Time", "Reminder", "Category", "Status"
+                "Task Name", "Due Date", "Start Time", "Reminder", "Snooze", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -752,6 +842,32 @@ public class Main extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    private void showFileChooser() {
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Audio files", "mp3", "wav");
+        fileChooser.setFileFilter(filter);
+
+        int result = fileChooser.showOpenDialog(null);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            SelectedMusicName.setText(selectedFile.getName());
+            SelectedMusicLabel.setText("Selected Music:");
+            reminderMusicPath = selectedFile;
+        } else {
+            
+        }
+    }
+    
+    private static boolean isWavFile(File file) {
+        return file.getName().toLowerCase().endsWith(".wav");
+    }
+
+    private static boolean isMp3File(File file) {
+        return file.getName().toLowerCase().endsWith(".mp3");
+    }
+    
     private void exitApplication() {
         SystemTray.getSystemTray().remove(trayIcon);
         System.exit(0);
@@ -874,6 +990,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton LogoutButton;
     private javax.swing.JButton MinimizeButton;
     private javax.swing.JPanel SecondCircle;
+    private javax.swing.JButton SelectMusicButton;
+    private javax.swing.JLabel SelectMusicLabel;
+    private javax.swing.JPanel SelectMusicPanel;
+    private javax.swing.JLabel SelectedMusicLabel;
+    private javax.swing.JTextField SelectedMusicName;
     private javax.swing.JButton TasksButton;
     private javax.swing.JScrollPane TasksInterface;
     private javax.swing.JPanel TasksList;

@@ -213,7 +213,7 @@ public class ReminderFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+  
     private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
         dispose();
     }//GEN-LAST:event_ExitButtonActionPerformed

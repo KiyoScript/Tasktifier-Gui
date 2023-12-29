@@ -21,10 +21,22 @@ public class PanelAction extends javax.swing.JPanel {
     public void initEvent(TableActionEvent event, int row){
         DoneButton.addActionListener((ActionEvent e) -> {
             event.doneTask(row);
+            if(TasktifierGUI.Index.getMainInstance() != null){
+                TasktifierGUI.Index.getMainInstance().dispose();
+            }
+            if(TasktifierGUI.Main.getInstance() != null){
+                TasktifierGUI.Main.getInstance().dispose();
+            }
             new MainFrameRefresher();
         });
         DeleteButton.addActionListener((ActionEvent e) -> {
             event.deleteTask(row);
+            if(TasktifierGUI.Index.getMainInstance() != null){
+                TasktifierGUI.Index.getMainInstance().dispose();
+            }
+            if(TasktifierGUI.Main.getInstance() != null){
+                TasktifierGUI.Main.getInstance().dispose();
+            }
             new MainFrameRefresher();
         });
     }
